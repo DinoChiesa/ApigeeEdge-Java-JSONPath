@@ -1,0 +1,8 @@
+<JavaCallout name="Java-JSON-Path-Multiple-Fields">
+  <Properties>
+    <Property name='jsonpath'>$[*]['id','name']</Property>
+    <Property name='source'>contrivedMessage.content</Property>
+  </Properties>
+  <ClassName>com.google.apigee.edgecallouts.jsonpath.JsonPathCallout</ClassName>
+  <ResourceURL>java://edge-callout-jsonpath-20191216.jar</ResourceURL>
+</JavaCallout>
