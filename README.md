@@ -1,7 +1,7 @@
 # Java callout for JSONPath
 
-This directory contains the Java source code required to compile a Java
-callout for Apigee Edge that does JSONPath. There's a built-in ExtractVariables policy that
+This directory contains the Java source code required to compile a Java callout
+for Apigee that does JSONPath. There's a built-in ExtractVariables policy that
 can evaluate json-path; this callout is a bit more flexible.
 
 * the source can be a string or a message
@@ -12,17 +12,76 @@ can evaluate json-path; this callout is a bit more flexible.
 
 This example is not an official Google product, nor is it part of an official Google product.
 
+
+## Motivation
+
+The builtin
+[ExtractVariables](https://docs.apigee.com/api-platform/reference/policies/extract-variables-policy)
+policy in Apigee relies on an older version of the jayway jsonpath library,
+v0.8.0.  This version has some shortcomings.
+
+1. It is not possible to filter on a boolean literal field. For example, in the case of this JSON:
+   ```json
+   [    {
+         "isActive" : false,
+         "resourceId" : 2
+       },
+       {
+         "isActive" : true,
+         "resourceId" : 3
+       }
+   ]
+   ```
+
+   This query does not work: `$[?(@.isActive == true)].resourceId`
+
+2. compound filter predicates do not work.
+
+3. the `in` and `nin` operators do not work. For example, this is invalid: `$.quotas.quota[?(@.appname in ['B','C'])].value`
+
+4. It's not clear that the other aggregate operators like `subsetof` `anyof` `noneof` work.
+
+4. slices return a single element, rather than an array.
+
+To address those shortcomings, it would be nice to have a JSONPath mechanism that used v2.4.0 of the library.
+
+That isn't possible in today's Apigee with builtin policies. This callout allows you to use any of these more current jsonpath features.
+
+
 ## Using this policy
 
-You need to build the source code in order to use the policy in Apigee Edge, in order to download all the dependencies.
+To use the policy you must have an API Proxy configured with the JAR included
+here, as well as all of its dependencies, in the resources/jaava directory.
 
+You do not need to build the source code in order to use the policy in Apigee,
+or to download all the dependencies. The pre-built JAR and the dependencies are
+include in this repo.
+
+But if you _want_ to build the policy from source code, you can do so.
 The instructions to do so are at the bottom of this README.
 
-After you build it,
 
-1. copy the jar file, available in  target/edge-callout-jsonpath-20191216.jar , if you have built the jar, or in [the repo](bundle/apiproxy/resources/java/edge-callout-jsonpath-20191216.jar) if you have not, to your apiproxy/resources/java directory. Also copy all the required dependencies. (See below) You can do this offline, or using the graphical Proxy Editor in the Apigee Edge Admin Portal.
+To use the jar and dependencies included in this repo:
 
-2. include a Java callout policy in your
+* copy all of the jar files available in [the
+  repo](bundle/apiproxy/resources/java/), to your apiproxy/resources/java
+  directory. You can do this offline in your filesystem, or you can do it
+  graphically using the Proxy Editor in the Apigee Edge Admin UI.
+
+To use the jar and the downloaded dependencies, _first_ build the project (see
+instructions below), then after you build it:
+
+* copy the jar file, available in target/edge-callout-jsonpath-20191216.jar , if
+  you have built the jar, or in [the
+  repo](bundle/apiproxy/resources/java/edge-callout-jsonpath-20191216.jar) if
+  you have not, to your apiproxy/resources/java directory. Also copy all the
+  required dependencies. (See below) You can do this offline, or using the
+  graphical Proxy Editor in the Apigee Edge Admin Portal.
+
+
+Then, in either case:
+
+1. include a Java callout policy in your
    apiproxy/resources/policies directory. It should look
    like this:
    ```xml
@@ -43,7 +102,7 @@ After you build it,
 
 
 
-## Notes
+## Usage Notes
 
 There is one callout class, com.google.apigee.edgecallouts.jsonpath.JsonPathCallout ,
 which performs a JSON Path read . This class depends on [the jayway jsonpath
@@ -52,14 +111,14 @@ library for Java](https://github.com/json-path/JsonPath), v2.4.0
 You must configure the callout with Property elements in the policy
 configuration.
 
-| Property           | Description                                                                                                         |
-|--------------------|---------------------------------------------------------------------------------------------------------------------|
-| jsonpath             | required. a string representing the query.                                                                        |
+| Property             | Description                                                                                                      |
+|----------------------|------------------------------------------------------------------------------------------------------------------|
+| jsonpath             | required. a string representing the query.                                                                       |
 | source               | optional. name of a string variable that contains json, or name of a Message that has a json payload.            |
 | return-first-element | optional. when the jsonpath returns a list, this property gets the first element of that list. (See notes below) |
 
 
-Regarding `return-first-element`, the jsonpath spec allows for predicates, but
+Regarding `return-first-element`: the jsonpath spec allows for predicates, but
 does not allow for indexers following predicates.  Given this source json:
 ```json
 {
@@ -94,13 +153,16 @@ A json path of `$.records[?(@.type=='A')]` yields:
 ]
 ```
 
-This is an array. One might thing that appending a `[0]` to the above jsonpath
-would yield the first element of that array, but [that is not correct](https://github.com/json-path/JsonPath/issues/272).
+This is an array. One might thing that using a jsonpath that appends a `[0]` to
+the above query, giving you `$.records[?(@.type=='A')][0]`, would yield the
+first element of that array, but [that is not
+correct](https://github.com/json-path/JsonPath/issues/272). JsonPath does not
+support that syntax for a query.
+
 
 The `return-first-element` property allows you to retrieve just the first
 element of the returned array.  If you need the 2nd element or ... something
-else, then... you need to evaluate a 2nd jsonpath query.
-
+else, then... you can get that by evaluating a 2nd jsonpath query.
 
 ## Building
 
@@ -140,7 +202,7 @@ as the API Proxy configuration.
 
 ## Support
 
-This callout is open-source software, and is not a supported part of Apigee Edge.
+This callout is open-source software, and is not a supported part of Apigee.
 If you need assistance, you can try inquiring on
 [The Apigee Community Site](https://community.apigee.com).  There is no service-level
 guarantee for responses to inquiries regarding this callout.
@@ -149,4 +211,3 @@ guarantee for responses to inquiries regarding this callout.
 ## Bugs
 
 * The tests are incomplete.
-

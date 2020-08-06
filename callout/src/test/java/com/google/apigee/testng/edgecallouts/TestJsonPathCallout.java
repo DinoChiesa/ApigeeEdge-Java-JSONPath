@@ -62,7 +62,7 @@ public class TestJsonPathCallout {
               variables = new HashMap<String,Object>();
             }
             T value = (T) variables.get(name);
-            System.out.printf("getVariable(%s) ==> %s\n", name, value.toString());
+            System.out.printf("getVariable(%s) ==> %s\n", name, (value!=null)?value.toString():"null");
             return value;
           }
 
