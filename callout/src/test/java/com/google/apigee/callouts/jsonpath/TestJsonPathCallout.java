@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC.
+// Copyright 2019-2022 Google LLC.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-package com.google.apigee.testng.edgecallouts;
+package com.google.apigee.callouts.jsonpath;
 
 import com.apigee.flow.execution.ExecutionContext;
 import com.apigee.flow.execution.ExecutionResult;
@@ -21,7 +21,6 @@ import com.apigee.flow.message.Message;
 import com.apigee.flow.message.MessageContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.apigee.edgecallouts.jsonpath.JsonPathCallout;
 import com.google.apigee.util.CalloutUtil;
 import java.io.File;
 import java.io.IOException;

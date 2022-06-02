@@ -4,9 +4,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.apigee.callout</groupId>
-  <artifactId>edge-callout-jsonpath</artifactId>
-  <version>20191216</version>
-  <name>EdgeCustomJsonPath</name>
+  <artifactId>apigee-callout-jsonpath</artifactId>
+  <version>20220602</version>
+  <name>ApigeeCustomJsonPath</name>
   <url>http://maven.apache.org</url>
   <packaging>jar</packaging>
   <properties>
@@ -17,8 +17,8 @@
     <testng.version>6.8.7</testng.version> <!-- current: 6.9.4 -->
     <jmockit.version>1.7</jmockit.version>
     <jackson.version>[2.9.10.1,)</jackson.version>
-    <jsonpath.version>2.4.0</jsonpath.version>
-    <jsonsmart.version>2.3</jsonsmart.version>
+    <jsonpath.version>2.7.0</jsonpath.version>
+    <jsonsmart.version>2.4.8</jsonsmart.version>
   </properties>
 
   <dependencies>

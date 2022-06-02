@@ -71,9 +71,9 @@ To use the jar and dependencies included in this repo:
 To use the jar and the downloaded dependencies, _first_ build the project (see
 instructions below), then after you build it:
 
-* copy the jar file, available in target/edge-callout-jsonpath-20191216.jar , if
+* copy the jar file, available in target/edge-callout-jsonpath-20220602.jar , if
   you have built the jar, or in [the
-  repo](bundle/apiproxy/resources/java/edge-callout-jsonpath-20191216.jar) if
+  repo](bundle/apiproxy/resources/java/edge-callout-jsonpath-20220602.jar) if
   you have not, to your apiproxy/resources/java directory. Also copy all the
   required dependencies. (See below) You can do this offline, or using the
   graphical Proxy Editor in the Apigee Edge Admin Portal.
@@ -90,8 +90,8 @@ Then, in either case:
        <Property name='jsonpath'>$[*]['id','name']</Property>
        <Property name='source'>contrivedMessage.content</Property>
      </Properties>
-     <ClassName>com.google.apigee.edgecallouts.jsonpath.JsonPathCallout</ClassName>
-     <ResourceURL>java://edge-callout-jsonpath-20191216.jar</ResourceURL>
+     <ClassName>com.google.apigee.callouts.jsonpath.JsonPathCallout</ClassName>
+     <ResourceURL>java://apigee-callout-jsonpath-20220602.jar</ResourceURL>
    </JavaCallout>
    ```
 
@@ -104,7 +104,7 @@ Then, in either case:
 
 ## Usage Notes
 
-There is one callout class, com.google.apigee.edgecallouts.jsonpath.JsonPathCallout ,
+There is one callout class, com.google.apigee.callouts.jsonpath.JsonPathCallout ,
 which performs a JSON Path read . This class depends on [the jayway jsonpath
 library for Java](https://github.com/json-path/JsonPath), v2.4.0
 
@@ -189,13 +189,13 @@ Pull requests are welcomed!
 
 - Apigee Edge expressions v1.0
 - Apigee Edge message-flow v1.0
-- jayway json-path 2.4.0
-- json-smart 2.3
+- jayway json-path 2.7.0
+- json-smart 2.4.8
 
 
 ## License
 
-This material is Copyright (c) 2019, Google LLC.  and is licensed under
+This material is Copyright (c) 2019-2022, Google LLC.  and is licensed under
 the [Apache 2.0 License](LICENSE). This includes the Java code as well
 as the API Proxy configuration.
 
@@ -204,7 +204,8 @@ as the API Proxy configuration.
 
 This callout is open-source software, and is not a supported part of Apigee.
 If you need assistance, you can try inquiring on
-[The Apigee Community Site](https://community.apigee.com).  There is no service-level
+[The Apigee Community Site](https://www.googlecloudcommunity.com/gc/Apigee/bd-p/cloud-apigee).
+There is no service-level
 guarantee for responses to inquiries regarding this callout.
 
 

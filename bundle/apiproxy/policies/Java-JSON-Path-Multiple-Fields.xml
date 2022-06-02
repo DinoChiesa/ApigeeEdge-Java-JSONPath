@@ -3,6 +3,6 @@
     <Property name='jsonpath'>$[*]['id','name']</Property>
     <Property name='source'>contrivedMessage.content</Property>
   </Properties>
-  <ClassName>com.google.apigee.edgecallouts.jsonpath.JsonPathCallout</ClassName>
-  <ResourceURL>java://edge-callout-jsonpath-20191216.jar</ResourceURL>
+  <ClassName>com.google.apigee.callouts.jsonpath.JsonPathCallout</ClassName>
+  <ResourceURL>java://apigee-callout-jsonpath-20220602.jar</ResourceURL>
 </JavaCallout>
