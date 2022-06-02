@@ -71,9 +71,9 @@ To use the jar and dependencies included in this repo:
 To use the jar and the downloaded dependencies, _first_ build the project (see
 instructions below), then after you build it:
 
-* copy the jar file, available in target/edge-callout-jsonpath-20220602.jar , if
+* copy the jar file, available in target/apigee-callout-jsonpath-20220602.jar , if
   you have built the jar, or in [the
-  repo](bundle/apiproxy/resources/java/edge-callout-jsonpath-20220602.jar) if
+  repo](bundle/apiproxy/resources/java/apigee-callout-jsonpath-20220602.jar) if
   you have not, to your apiproxy/resources/java directory. Also copy all the
   required dependencies. (See below) You can do this offline, or using the
   graphical Proxy Editor in the Apigee Edge Admin Portal.
@@ -95,10 +95,10 @@ Then, in either case:
    </JavaCallout>
    ```
 
-5. use the Edge UI, or a command-line tool like [importAndDeploy.js](https://github.com/DinoChiesa/apigee-edge-js/blob/master/examples/importAndDeploy.js) or similar to
-   import the proxy into an Edge organization, and then deploy the proxy .
+5. use the Apigee UI, or a command-line tool like [importAndDeploy.js](https://github.com/DinoChiesa/apigee-edge-js-examples/blob/main/importAndDeploy.js) or [apigeecli](https://github.com/apigee/apigeecli) or similar to
+   import the proxy into an Apigee organization, and then deploy the proxy .
 
-6. use a client to generate and send http requests to tickle the proxy.
+6. use a client to generate and send http requests to invoke the proxy.
 
 
 
@@ -106,7 +106,7 @@ Then, in either case:
 
 There is one callout class, com.google.apigee.callouts.jsonpath.JsonPathCallout ,
 which performs a JSON Path read . This class depends on [the jayway jsonpath
-library for Java](https://github.com/json-path/JsonPath), v2.4.0
+library for Java](https://github.com/json-path/JsonPath), v2.7.0
 
 You must configure the callout with Property elements in the policy
 configuration.
